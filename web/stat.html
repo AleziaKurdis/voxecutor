@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Expires" content="0">        
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>VOXECUTOR - HALL OF FAME</title>
+        <style>
+            @font-face {
+                font-family: FiraSans-SemiBold;
+                src: url(FiraSans-SemiBold.ttf);
+            }
+            body {
+                font-family: FiraSans-SemiBold;
+                font-size: 12px;
+                margin: 50px;
+                background-color: #242833;
+                color: #ffffff;
+            }        
+            #last {
+                display: none;
+                width: 900px;
+                height: 1600px;
+                background-color: #8f6f18;
+                margin: 0px;
+                text-align: center;
+                padding: 0px;
+            }
+            #hall {
+                display: none;
+                width: 900px;
+                height: 1600px;
+                background-color: #26782c;
+                margin: 0px;
+                text-align: center;
+                padding: 0px;
+                font-size: 13px;
+            }
+            #categories {
+                display: none;
+                width: 900px;
+                height: 1600px;
+                background-color: #6e3fbf;
+                margin: 0px;
+                text-align: center;
+                padding: 0px;
+            }
+            #single {
+                width: 100%;
+                height: 50%;
+                text-align: center;
+            }
+            #multi {
+                width: 100%;
+                height: 50%;
+                background-color: #00266b;
+                text-align: center;
+            }
+            div.subdivision {
+                float: left;
+                width: 50%;
+            }
+            div.pageHeader {
+                width: 100%;
+                text-align: center;
+                font-size: 60px;
+                color: #ffffff;
+            }
+            div.statTable {
+                width: 100%;
+                padding: 0px;
+            }
+            table {
+                width: 90%;
+                border-collapse: collapse;
+                color: #000000;
+                text-align: left;
+                background-color: #ffffff;
+                margin-left:auto; 
+                margin-right:auto;                
+            }
+            th {
+                background-color: #444444;
+                color: #ffffff;
+                border: 2px solid #000000;
+                padding: 3px;
+            }
+            td {
+                background-color: #ffffff;
+                color: #000000;
+                border: 2px solid #000000;
+                padding: 3px;
+            }
+            div.subheader {
+                width: 90%;
+                text-align: left;
+                font-size: 20px;
+                margin-left:auto; 
+                margin-right:auto;
+            }
+        </style>
+        <script>
+            function findGetParameter(parameterName) {
+                var result = null,
+                    tmp = [];
+                var items = location.search.substr(1).split("&");
+                for (var index = 0; index < items.length; index++) {
+                    tmp = items[index].split("=");
+                    if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+                }
+                return result;
+            }
+
+            var view = findGetParameter("view");
+            if(view !== "LAST" && view !== "HALL" && view !== "CATEGORIES") { 
+                view = "LAST"; 
+            }
+
+        </script>
+    </head>
+    <body>
+        <div id="last">
+            <div class="pageHeader">LATEST GAMES PLAYED</div><br>
+            <div id="last50games" class="statTable"></div>        
+        </div>
+        <div id="hall">
+            <div class="pageHeader">HALL OF FAME</div>
+            <div id="top_player_score_all" class="statTable"></div><br><br>            
+        </div>
+        <div id="categories">
+            <div id="single">
+                <div class="pageHeader">SINGLE PLAYER</div><br>
+                <div class="subheader">WINNER SCORE - TOP 10:</div>
+                <div id="top_player_score_sp" class="statTable"></div>
+                <br><br>
+                <div class="subheader">GAME DURATION - TOP 10:</div>
+                <div id="top_game_duration_sp" class="statTable"></div>
+            </div>
+            <div id="multi">
+                <div class="pageHeader">MULTIPLAYER</div><br>
+               
+                <div class = "subheader">WINNER SCORE - TOP 5:</div>
+                <div id="top_player_score_mp" class="statTable"></div>
+                <br><br>
+                <div class = "subheader">COLLECTIVE SCORE - TOP 5:</div>
+                <div id="top_team_score_mp" class="statTable"></div>
+                <br><br>
+                <div class = "subheader">GAME DURATION - TOP 5:</div>
+                <div id="top_game_duration_mp" class="statTable"></div>
+                <br><br>
+                <div id="top_number_players" class = "subheader"></div>
+
+            </div>
+        </div>
+        
+        <script>
+
+             
+             function readTextFile(file, callback) {
+                var rawFile = new XMLHttpRequest();
+                rawFile.overrideMimeType("application/json");
+                rawFile.open("GET", file, true);
+                rawFile.setRequestHeader("Cache-Control", "no-cache");
+                rawFile.timeout = 10000; // 10 sec.
+                rawFile.ontimeout = function (e) {
+                    callback("");
+                };                
+                rawFile.onreadystatechange = function() {
+                    if (rawFile.readyState === 4 && rawFile.status == "200") {
+                        callback(rawFile.responseText);
+                    }
+                }
+                rawFile.send(null);
+            }
+
+            function toHHMMSS(seconds) {
+                var time;
+                var hours   = Math.floor(seconds / 3600);
+                var minutes = Math.floor((seconds - (hours * 3600)) / 60);
+                seconds = seconds - (hours * 3600) - (minutes * 60);
+
+                if (hours  < 10) {hours = "0"+hours;}
+                if (minutes < 10) {minutes = "0"+minutes;}
+                if (seconds < 10) {seconds = "0"+seconds;}
+                if (minutes === "00" && hours === "00"){
+                    time = seconds + "s";
+                } else {
+                    if (hours === "00") {
+                        time = minutes + "m" + seconds + "s";
+                    } else {
+                        time = hours + "h" + minutes + "m" + seconds + "s";
+                    }
+                }
+                return time;
+            }
+
+            function getNbrGhost(nbrSecond) {
+                var voxecutor = 4 + Math.floor(nbrSecond / 120);
+                return voxecutor;
+            }
+
+            readTextFile("top_player_score_all.json", function(text){ 
+                var topPlayerScoreAll = JSON.parse(text);
+                var nbrElement = 50;
+                if (topPlayerScoreAll.length < nbrElement) {
+                    nbrElement = topPlayerScoreAll.length;
+                }
+                var table = "<table>";
+                table = table + "<tr valign='top'>";
+                table = table + "<th style='width:5%;'>RANK</th>";
+                table = table + "<th style='width:45%;'>WINNER</th>";
+                table = table + "<th style='width:10%;'>SCORE</th>";
+                table = table + "<th style='width:5%;'>PLAYERS</th>";
+                table = table + "<th style='width:15%;'>DURATION</th>";
+                table = table + "<th style='width:20%;'>DATE (UTC)</th>";
+                table = table + "</tr>";                
+                for (var i = 0; i < nbrElement; i++) {
+                    table = table + "<tr>";
+                    table = table + "<td>" + (i+1) + "</td>";
+                    table = table + "<td>" + topPlayerScoreAll[i].winnerName + "</td>";
+                    table = table + "<td style='color: #c24700;'>" + topPlayerScoreAll[i].winnerScore + "</td>";
+                    table = table + "<td>" + topPlayerScoreAll[i].nbrPlayers + "</td>";
+                    table = table + "<td>" + toHHMMSS(topPlayerScoreAll[i].gameDuration) + "&nbsp;&nbsp;&nbsp;&#128123;<sup>" + getNbrGhost(topPlayerScoreAll[i].gameDuration) + "</sup></td>";
+                    table = table + "<td>" + topPlayerScoreAll[i].timestamp + "</td>";
+                    table = table + "</tr>";
+                }
+                table = table + "</table>";
+                document.getElementById("top_player_score_all").innerHTML = table;
+            });
+
+            readTextFile("top_player_score_sp.json", function(text){ 
+                var topPlayerScoreSp = JSON.parse(text); 
+                var nbrElement = 10;
+                if (topPlayerScoreSp.length < nbrElement) {
+                    nbrElement = topPlayerScoreSp.length;
+                }
+                var table = "<table>";
+                table = table + "<tr valign='top'>";
+                table = table + "<th style='width:8%;'>RANK</th>";
+                table = table + "<th style='width:45%;'>WINNER</th>";
+                table = table + "<th style='width:12%;'>SCORE</th>";
+                table = table + "<th style='width:17%;'>DURATION</th>";
+                table = table + "<th style='width:18%;'>DATE (UTC)</th>";
+                table = table + "</tr>";                
+                for (var i = 0; i < nbrElement; i++) {
+                    table = table + "<tr>";
+                    table = table + "<td>" + (i+1) + "</td>";
+                    table = table + "<td>" + topPlayerScoreSp[i].winnerName + "</td>";
+                    table = table + "<td style='color: #c24700;'>" + topPlayerScoreSp[i].winnerScore + "</td>";
+                    table = table + "<td>" + toHHMMSS(topPlayerScoreSp[i].gameDuration) + "&nbsp;&nbsp;&nbsp;&#128123;<sup>" + getNbrGhost(topPlayerScoreSp[i].gameDuration) + "</sup></td>";
+                    table = table + "<td>" + topPlayerScoreSp[i].timestamp + "</td>";
+                    table = table + "</tr>";
+                }
+                table = table + "</table>";
+                document.getElementById("top_player_score_sp").innerHTML = table;                
+            
+            });            
+
+            readTextFile("top_game_duration_sp.json", function(text){ 
+                var topGameDurationSp = JSON.parse(text); 
+                var nbrElement = 10;
+                if (topGameDurationSp.length < nbrElement) {
+                    nbrElement = topGameDurationSp.length;
+                }
+                var table = "<table>";
+                table = table + "<tr valign='top'>";
+                table = table + "<th style='width:8%;'>RANK</th>";
+                table = table + "<th style='width:17%;'>DURATION</th>";
+                table = table + "<th style='width:45%;'>WINNER</th>";
+                table = table + "<th style='width:12%;'>SCORE</th>";
+                table = table + "<th style='width:18%;'>DATE (UTC)</th>";
+                table = table + "</tr>";                
+                for (var i = 0; i < nbrElement; i++) {
+                    table = table + "<tr>";
+                    table = table + "<td>" + (i+1) + "</td>";
+                    table = table + "<td style='color: #c24700;'>" + toHHMMSS(topGameDurationSp[i].gameDuration) + "&nbsp;&nbsp;&nbsp;&#128123;<sup>" + getNbrGhost(topGameDurationSp[i].gameDuration) + "</sup></td>";
+                    table = table + "<td>" + topGameDurationSp[i].winnerName + "</td>";
+                    table = table + "<td>" + topGameDurationSp[i].winnerScore + "</td>";
+                    table = table + "<td>" + topGameDurationSp[i].timestamp + "</td>";
+                    table = table + "</tr>";
+                }
+                table = table + "</table>";
+                document.getElementById("top_game_duration_sp").innerHTML = table;         
+            }); 
+
+            readTextFile("top_player_score_mp.json", function(text){ 
+                var topPlayerScoreMp = JSON.parse(text); 
+                var nbrElement = 5;
+                if (topPlayerScoreMp.length < nbrElement) {
+                    nbrElement = topPlayerScoreMp.length;
+                }
+                var table = "<table>";
+                table = table + "<tr valign='top'>";
+                table = table + "<th style='width:3%;'>#</th>";
+                table = table + "<th style='width:22%;'>WINNER</th>";
+                table = table + "<th style='width:7%;'>SCORE</th>";
+                table = table + "<th style='width:5%;'>NBR.</th>";
+                table = table + "<th style='width:30%;'>PARTICIPANTS</th>";
+                table = table + "<th style='width:8%;'>COLLECTIVE SCORE</th>";
+                table = table + "<th style='width:12%;'>DURATION</th>"; 
+                table = table + "<th style='width:14%;'>DATE (UTC)</th>";                
+                table = table + "</tr>";                
+                for (var i = 0; i < nbrElement; i++) {
+                    table = table + "<tr>";
+                    table = table + "<td>" + (i+1) + "</td>";
+                    table = table + "<td>" + topPlayerScoreMp[i].winnerName + "</td>";
+                    table = table + "<td style='color: #c24700;'>" + topPlayerScoreMp[i].winnerScore + "</td>";                    
+                    table = table + "<td>" + topPlayerScoreMp[i].nbrPlayers + "</td>";
+                    table = table + "<td style='font-size: 8px; padding: 1px;'>" + topPlayerScoreMp[i].playersList + "</td>";
+                    table = table + "<td>" + topPlayerScoreMp[i].teamScore + "</td>";
+                    table = table + "<td>" + toHHMMSS(topPlayerScoreMp[i].gameDuration) + "&nbsp;&nbsp;&nbsp;&#128123;<sup>" + getNbrGhost(topPlayerScoreMp[i].gameDuration) + "</sup></td>";
+                    table = table + "<td>" + topPlayerScoreMp[i].timestamp + "</td>"; 
+                    table = table + "</tr>";
+                }
+                table = table + "</table>";
+                document.getElementById("top_player_score_mp").innerHTML = table;
+            }); 
+            
+            readTextFile("top_team_score_mp.json", function(text){ 
+                var topTeamScoreMp = JSON.parse(text); 
+                var nbrElement = 5;
+                if (topTeamScoreMp.length < nbrElement) {
+                    nbrElement = topTeamScoreMp.length;
+                }
+                var table = "<table>";
+                table = table + "<tr valign='top'>";
+                table = table + "<th style='width:3%;'>#</th>";                           
+                table = table + "<th style='width:5%;'>PLAYERS</th>";
+                table = table + "<th style='width:52%;'>PARTICIPANTS</th>";
+                table = table + "<th style='width:10%;'>COLLECTIVE SCORE</th>";
+                table = table + "<th style='width:15%;'>DURATION</th>"; 
+                table = table + "<th style='width:15%;'>DATE (UTC)</th>";                
+                table = table + "</tr>";                
+                for (var i = 0; i < nbrElement; i++) {
+                    table = table + "<tr>";
+                    table = table + "<td>" + (i+1) + "</td>";              
+                    table = table + "<td>" + topTeamScoreMp[i].nbrPlayers + "</td>";
+                    table = table + "<td style='font-size: 8px;'>" + topTeamScoreMp[i].playersList + "</td>";
+                    table = table + "<td style='color: #c24700;'>" + topTeamScoreMp[i].teamScore + "</td>";
+                    table = table + "<td>" + toHHMMSS(topTeamScoreMp[i].gameDuration) + "&nbsp;&nbsp;&nbsp;&#128123;<sup>" + getNbrGhost(topTeamScoreMp[i].gameDuration) + "</sup></td>";
+                    table = table + "<td>" + topTeamScoreMp[i].timestamp + "</td>"; 
+                    table = table + "</tr>";
+                }
+                table = table + "</table>";
+                document.getElementById("top_team_score_mp").innerHTML = table;
+            });
+
+            readTextFile("top_game_duration_mp.json", function(text){ 
+                var topGameDurationMp = JSON.parse(text); 
+                var nbrElement = 5;
+                if (topGameDurationMp.length < nbrElement) {
+                    nbrElement = topGameDurationMp.length;
+                }
+                var table = "<table>";
+                table = table + "<tr valign='top'>";
+                table = table + "<th style='width:3%;'>#</th>";
+                table = table + "<th style='width:15%;'>DURATION</th>";                               
+                table = table + "<th style='width:5%;'>PLAYERS</th>";
+                table = table + "<th style='width:52%;'>PARTICIPANTS</th>";
+                table = table + "<th style='width:10%;'>COLLECTIVE SCORE</th>";
+                table = table + "<th style='width:15%;'>DATE (UTC)</th>";                
+                table = table + "</tr>";                
+                for (var i = 0; i < nbrElement; i++) {
+                    table = table + "<tr>";
+                    table = table + "<td>" + (i+1) + "</td>";
+                    table = table + "<td style='color: #c24700;'>" + toHHMMSS(topGameDurationMp[i].gameDuration) + "&nbsp;&nbsp;&nbsp;&#128123;<sup>" + getNbrGhost(topGameDurationMp[i].gameDuration) + "</sup></td>";                 
+                    table = table + "<td>" + topGameDurationMp[i].nbrPlayers + "</td>";
+                    table = table + "<td style='font-size: 8px;'>" + topGameDurationMp[i].playersList + "</td>";
+                    table = table + "<td>" + topGameDurationMp[i].teamScore + "</td>";
+                    table = table + "<td>" + topGameDurationMp[i].timestamp + "</td>"; 
+                    table = table + "</tr>";
+                }
+                table = table + "</table>";
+                document.getElementById("top_game_duration_mp").innerHTML = table;
+            });             
+
+            readTextFile("top_number_players.json", function(text){ 
+                document.getElementById("top_number_players").innerHTML = "Largest Number of Players Ever: <font style='color: #c24700;'>" + parseInt(text, 10) + "</font>";             
+            });
+
+            readTextFile("last50games.json", function(text){ 
+                var lastGamesPlayed = JSON.parse(text); 
+                var nbrElement = 30;
+                if (lastGamesPlayed.length < nbrElement) {
+                    nbrElement = lastGamesPlayed.length;
+                }
+                var table = "<table>";
+                table = table + "<tr valign='top'>";
+                table = table + "<th style='width:15%;'>DATE (UTC)</th>";
+                table = table + "<th style='width:26%;'>WINNER</th>";
+                table = table + "<th style='width:7%;'>SCORE</th>";                
+                table = table + "<th style='width:5%;'>NBR.</th>";
+                table = table + "<th style='width:26%;'>PARTICIPANTS</th>";
+                table = table + "<th style='width:7%;'>COLLECTIVE SCORE</th>";
+                table = table + "<th style='width:13%;'>DURATION</th>";
+
+                table = table + "</tr>";                
+                for (var i = 0; i < nbrElement; i++) {
+                    table = table + "<tr>";
+                    table = table + "<td style='color: #c24700;'>" + lastGamesPlayed[i].timestamp + "</td>"; 
+                    table = table + "<td>" + lastGamesPlayed[i].winnerName + "</td>";
+                    table = table + "<td>" + lastGamesPlayed[i].winnerScore + "</td>";                    
+                    table = table + "<td>" + lastGamesPlayed[i].nbrPlayers + "</td>";
+                    table = table + "<td style='font-size: 8px; padding: 1px;'>" + lastGamesPlayed[i].playersList + "</td>";
+                    table = table + "<td>" + lastGamesPlayed[i].teamScore + "</td>";
+                    table = table + "<td>" + toHHMMSS(lastGamesPlayed[i].gameDuration) + "&nbsp;&nbsp;&nbsp;&#128123;<sup>" + getNbrGhost(lastGamesPlayed[i].gameDuration) + "</sup></td>";
+                    table = table + "</tr>";
+                }
+                table = table + "</table>";
+                document.getElementById("last50games").innerHTML = table;                
+            });
+
+            switch(view) {
+                case "LAST":
+                    document.getElementById("last").style.display = "block";
+                    break;
+                case "HALL":
+                    document.getElementById("hall").style.display = "block";
+                    break;
+                case "CATEGORIES":
+                    document.getElementById("categories").style.display = "block";
+                    break;                    
+                default:
+                    // in trouble for no reason
+            } 
+        </script>
+    </body>
+</html>

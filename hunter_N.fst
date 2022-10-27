@@ -1,0 +1,3 @@
+name = HUNTER_N
+filename = hunter.fbx
+materialMap = [{"mat::BODY": {"materials":[{ "name": "BODY", "albedo": [0 ,0 ,0], "roughness": 0.1, "metallic": 1.0, "cullFaceMode": "CULL_NONE", "model": "hifi_pbr", "defaultFallthrough": false}]}}, {"mat::LIGHT": {"materials":[{ "name": "LIGHT", "albedo": [1.0 ,1.0 ,1.0], "roughness": 0.9, "metallic": 0.001, "emissive": [2.01, 1.89, 1.426], "cullFaceMode": "CULL_NONE", "model": "hifi_pbr", "defaultFallthrough": false}]}}, {"mat::VOID": {"materials":[{ "name": "VOID", "albedo": [1.0 ,1.0 ,1.0], "roughness": 1.0, "metallic": 0.01, "opacity": 0, "cullFaceMode": "CULL_NONE", "model": "hifi_pbr", "defaultFallthrough": false}]}}]
