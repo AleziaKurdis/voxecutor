@@ -1,0 +1,287 @@
+{
+  "DataVersion": 0,
+  "Entities": [
+    {
+    "id": "{14d6b494-6280-4656-bdbb-c89c8f26079b}",
+    "type": "Model",
+    "lastEdited": 1666835547891616,
+    "name": "ruleFrame",
+    "position": {
+        "x": 6.4833984375,
+        "y": 16.06396484375,
+        "z": 8.76123046875
+    },
+    "dimensions": {
+        "x": 1.4039040803909302,
+        "y": 1.403903841972351,
+        "z": 0.04729568213224411
+    },
+    "rotation": {
+        "x": -0.0000152587890625,
+        "y": -0.8602273464202881,
+        "z": -0.0000152587890625,
+        "w": 0.5099107027053833
+    },
+    "created": 1666754689609493,
+    "lastEditedBy": "{a094aff8-bbdc-41dc-8753-33ba55b175ed}",
+    "queryAACube": {
+        "x": 5.4904069900512695,
+        "y": 15.07097339630127,
+        "z": 7.7682390213012695,
+        "scale": 1.9859832525253296
+    },
+    "renderWithZones": [
+        "{37f44a1e-75de-4be3-ac93-413bb10e7fe8}"
+    ],
+    "grab": {
+        "grabbable": false,
+        "equippableLeftRotation": {
+            "x": -0.0000152587890625,
+            "y": -0.0000152587890625,
+            "z": -0.0000152587890625,
+            "w": 1
+        },
+        "equippableRightRotation": {
+            "x": -0.0000152587890625,
+            "y": -0.0000152587890625,
+            "z": -0.0000152587890625,
+            "w": 1
+        }
+    },
+    "modelURL": "https://aleziakurdis.github.io/voxecutor/ruleFrame.fst",
+    "blendshapeCoefficients": "{\n}\n",
+    "useOriginalPivot": true,
+    "clientOnly": false,
+    "avatarEntity": false,
+    "localEntity": false,
+    "faceCamera": false,
+    "isFacingAvatar": false
+},
+    {
+    "id": "{4939f67e-d707-4c39-8765-9be843c5c5b9}",
+    "type": "Model",
+    "lastEdited": 1666835547891771,
+    "name": "VOXECUTOR_ARENA",
+    "position": {
+        "x": 0,
+        "y": 0,
+        "z": 5.30078125
+    },
+    "dimensions": {
+        "x": 215.808837890625,
+        "y": 88.50761413574219,
+        "z": 215.808837890625
+    },
+    "rotation": {
+        "x": -0.0000152587890625,
+        "y": -0.0000152587890625,
+        "z": -0.0000152587890625,
+        "w": 1
+    },
+    "created": 1664937764061184,
+    "lastEditedBy": "{43ea984c-3550-4eae-8619-0d548e8e850f}",
+    "queryAACube": {
+        "x": -158.88714599609375,
+        "y": -158.88714599609375,
+        "z": -153.58636474609375,
+        "scale": 317.7742919921875
+    },
+    "renderWithZones": [
+        "{37f44a1e-75de-4be3-ac93-413bb10e7fe8}"
+    ],
+    "grab": {
+        "grabbable": false,
+        "equippableLeftRotation": {
+            "x": -0.0000152587890625,
+            "y": -0.0000152587890625,
+            "z": -0.0000152587890625,
+            "w": 1
+        },
+        "equippableRightRotation": {
+            "x": -0.0000152587890625,
+            "y": -0.0000152587890625,
+            "z": -0.0000152587890625,
+            "w": 1
+        }
+    },
+    "damping": 0,
+    "angularDamping": 0,
+    "script": "https://aleziakurdis.github.io/voxecutor/userManager.js",
+    "scriptTimestamp": 1665629945856,
+    "shapeType": "static-mesh",
+    "modelURL": "https://aleziakurdis.github.io/voxecutor/voxecutor_arena.fst",
+    "blendshapeCoefficients": "{\n}\n",
+    "useOriginalPivot": true,
+    "animation": {
+        "allowTranslation": false
+    },
+    "clientOnly": false,
+    "avatarEntity": false,
+    "localEntity": false,
+    "faceCamera": false,
+    "isFacingAvatar": false
+},
+    {
+    "id": "{c01e2e73-5b90-4ef0-9f4a-7214807d79e4}",
+    "type": "Model",
+    "lastEdited": 1666835547891923,
+    "name": "statKiosk",
+    "position": {
+        "x": 0,
+        "y": 15.55517578125,
+        "z": 0
+    },
+    "dimensions": {
+        "x": 1.2477504014968872,
+        "y": 2.4045095443725586,
+        "z": 1.080583930015564
+    },
+    "rotation": {
+        "x": -0.0000152587890625,
+        "y": -0.0000152587890625,
+        "z": -0.0000152587890625,
+        "w": 1
+    },
+    "created": 1666412280020992,
+    "lastEditedBy": "{4435a311-37c2-432e-98e2-71837cabe5e6}",
+    "queryAACube": {
+        "x": -1.4582701921463013,
+        "y": 14.096905708312988,
+        "z": -1.4582701921463013,
+        "scale": 2.9165403842926025
+    },
+    "renderWithZones": [
+        "{37f44a1e-75de-4be3-ac93-413bb10e7fe8}"
+    ],
+    "grab": {
+        "grabbable": false,
+        "equippableLeftRotation": {
+            "x": -0.0000152587890625,
+            "y": -0.0000152587890625,
+            "z": -0.0000152587890625,
+            "w": 1
+        },
+        "equippableRightRotation": {
+            "x": -0.0000152587890625,
+            "y": -0.0000152587890625,
+            "z": -0.0000152587890625,
+            "w": 1
+        }
+    },
+    "script": "https://aleziakurdis.github.io/voxecutor/statKiosk.js",
+    "scriptTimestamp": 1666495807488,
+    "shapeType": "static-mesh",
+    "modelURL": "https://aleziakurdis.github.io/voxecutor/statKiosk.fbx",
+    "blendshapeCoefficients": "{\n}\n",
+    "clientOnly": false,
+    "avatarEntity": false,
+    "localEntity": false,
+    "faceCamera": false,
+    "isFacingAvatar": false
+},
+    {
+    "id": "{37f44a1e-75de-4be3-ac93-413bb10e7fe8}",
+    "type": "Zone",
+    "lastEdited": 1666835547892073,
+    "name": "VOXECUTOR_VISIBILITY_ZONE_(X!X)",
+    "position": {
+        "x": 0,
+        "y": 0,
+        "z": 5.30078125
+    },
+    "dimensions": {
+        "x": 3000,
+        "y": 1000,
+        "z": 3000
+    },
+    "rotation": {
+        "x": -0.0000152587890625,
+        "y": -0.0000152587890625,
+        "z": -0.0000152587890625,
+        "w": 1
+    },
+    "created": 1664937764061184,
+    "lastEditedBy": "{489feb4e-cbda-41b6-a690-1565b8f223b3}",
+    "queryAACube": {
+        "x": -2179.449462890625,
+        "y": -2179.449462890625,
+        "z": -2174.148681640625,
+        "scale": 4358.89892578125
+    },
+    "grab": {
+        "grabbable": false,
+        "equippableLeftRotation": {
+            "x": -0.0000152587890625,
+            "y": -0.0000152587890625,
+            "z": -0.0000152587890625,
+            "w": 1
+        },
+        "equippableRightRotation": {
+            "x": -0.0000152587890625,
+            "y": -0.0000152587890625,
+            "z": -0.0000152587890625,
+            "w": 1
+        }
+    },
+    "damping": 0,
+    "angularDamping": 0,
+    "shapeType": "box",
+    "keyLight": {
+        "color": {
+            "red": 184,
+            "green": 255,
+            "blue": 166
+        },
+        "intensity": 3,
+        "direction": {
+            "x": 0,
+            "y": -0.9999997019767761,
+            "z": 0.0007962742820382118
+        },
+        "castShadows": true,
+        "shadowBias": 0.029999999329447746,
+        "shadowMaxDistance": 200
+    },
+    "ambientLight": {
+        "ambientIntensity": 2,
+        "ambientURL": "https://aleziakurdis.github.io/voxecutor/alpha_ambient.jpg"
+    },
+    "skybox": {
+        "color": {
+            "red": 255,
+            "green": 255,
+            "blue": 255
+        },
+        "url": "https://aleziakurdis.github.io/voxecutor/alpha_sky.jpg"
+    },
+    "haze": {
+        "hazeRange": 200,
+        "hazeColor": {
+            "red": 167,
+            "green": 250,
+            "blue": 181
+        },
+        "hazeGlareColor": {
+            "red": 18,
+            "green": 255,
+            "blue": 125
+        },
+        "hazeAltitudeEffect": true,
+        "hazeCeiling": 8000,
+        "hazeBaseRef": 7970
+    },
+    "keyLightMode": "enabled",
+    "ambientLightMode": "enabled",
+    "skyboxMode": "enabled",
+    "hazeMode": "enabled",
+    "bloomMode": "enabled",
+    "clientOnly": false,
+    "avatarEntity": false,
+    "localEntity": false,
+    "faceCamera": false,
+    "isFacingAvatar": false
+}
+    ],
+  "Id": "{aa7fb8e8-b76f-4283-b710-717d79e31da3}",
+  "Version": 133
+}
