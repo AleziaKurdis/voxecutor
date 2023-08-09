@@ -1,4 +1,4 @@
-"use strict";
+//"use strict";
 //
 //  AC_voxecutor.js
 //
@@ -971,7 +971,7 @@ function endGame() {
         teamScore = teamScore + players[h].score;
     }
     
-    var url = ROOT + "web/statDepot.php?k=ak464zp&winame=" + encodeURI(winnerName);
+    var url = ROOT + "web/statDepot.php?k=ak363zp&winame=" + encodeURI(winnerName);
     url = url + "&wiscore=" + winnerScore + "&tscore=" + teamScore + "&nplayers=" + nbrPlayers;
     url = url + "&dura=" + Math.floor(duration/1000) + "&memb=" + encodeURI(participants.substr(0, 1000));
     returnAllPlayersToLobby(); 
