@@ -1,4 +1,4 @@
-"use strict";
+//"use strict";
 //
 //  tpPod.js
 //
@@ -91,8 +91,13 @@
     this.enterEntity = function(entityID) {
         var properties = Entities.getEntityProperties(entityID,["userData"]);
         var hifiurl = properties.userData;
-
-        Window.location = hifiurl;
+        if (hifiurl === "BACK") {
+            if (location.canGoBack()) {
+                location.goBack();
+            }            
+        } else {
+            Window.location = hifiurl;
+        }
     }; 
 
     this.unload = function(entityID) {

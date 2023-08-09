@@ -1,4 +1,4 @@
-"use strict";
+//"use strict";
 //
 //  coinTrigger.js
 //
@@ -19,7 +19,7 @@
     
     this.enterEntity = function(entityID) {
         if (oneTimeOnly === false) {
-            var amount = parseInt(Entities.getEntityProperties(entityID,["description"]).description, 10);            
+            var amount = parseInt(Entities.getEntityProperties(entityID,["description"]).description, 10);
             var message = {
                 "action": "GET_COIN",
                 "avatarID": MyAvatar.sessionUUID,
@@ -34,7 +34,7 @@
                 "loop": false,
                 "localOnly": true
             };
-            var injector = Audio.playSound(SOUND_COIN_COLLECT, injectorOptions);            
+            var injector = Audio.playSound(SOUND_COIN_COLLECT, injectorOptions);
             
             oneTimeOnly = true;
         }
