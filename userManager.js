@@ -57,6 +57,7 @@
     var doorMessageTextID = Uuid.NULL;
     
     this.preload = function(entityID) {
+        Workload.getConfig("controlViews")["regulateViewRanges"] = false;
         SOUND_AMBIENCE_ENTRACT = SoundCache.getSound(ROOT + "sounds/entractAmbience.mp3");
         SOUND_AMBIENCE_PLAYING = SoundCache.getSound(ROOT + "sounds/trame.mp3");         
         SOUND_WAR_TIME = SoundCache.getSound(ROOT + "sounds/warTime.mp3");
@@ -907,6 +908,7 @@
         Messages.messageReceived.disconnect(onMessageReceived);
         Messages.unsubscribe(channelComm);
         Script.update.disconnect(myTimer);
+        Workload.getConfig("controlViews")["regulateViewRanges"] = true;
     };
 
     Script.scriptEnding.connect(function () {
